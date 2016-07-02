@@ -1,0 +1,218 @@
+[
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\abc_list_selector_holo_dark.xml",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_list_selector_holo_dark.xml"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\abc_btn_check_material.xml",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_btn_check_material.xml"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\abc_list_selector_holo_light.xml",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_list_selector_holo_light.xml"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\abc_item_background_holo_light.xml",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_item_background_holo_light.xml"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\abc_text_cursor_material.xml",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_text_cursor_material.xml"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\sample_2.jpg",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\sample_2.jpg"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\abc_ratingbar_small_material.xml",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_ratingbar_small_material.xml"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\sample_7.jpg",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\sample_7.jpg"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\abc_btn_radio_material.xml",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_btn_radio_material.xml"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\pic19.jpg",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\pic19.jpg"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\sample_1.jpg",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\sample_1.jpg"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\pic7.jpg",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\pic7.jpg"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\abc_ratingbar_indicator_material.xml",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_ratingbar_indicator_material.xml"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\abc_spinner_textfield_background_material.xml",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_spinner_textfield_background_material.xml"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\plus.png",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\plus.png"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\sample_6.jpg",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\sample_6.jpg"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\abc_list_selector_background_transition_holo_dark.xml",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_list_selector_background_transition_holo_dark.xml"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\abc_btn_default_mtrl_shape.xml",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_btn_default_mtrl_shape.xml"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\pic5.jpg",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\pic5.jpg"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\sample_3.jpg",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\sample_3.jpg"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\abc_cab_background_internal_bg.xml",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_cab_background_internal_bg.xml"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\abc_item_background_holo_dark.xml",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_item_background_holo_dark.xml"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\abc_list_selector_background_transition_holo_light.xml",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_list_selector_background_transition_holo_light.xml"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\pic8.jpg",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\pic8.jpg"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\design_snackbar_background.xml",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.0.0\\res\\drawable\\design_snackbar_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\abc_seekbar_track_material.xml",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_seekbar_track_material.xml"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\sample_0.jpg",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\sample_0.jpg"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\person_icon.png",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\person_icon.png"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\pic10.jpg",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\pic10.jpg"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\phone_icon.png",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\phone_icon.png"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\abc_cab_background_top_material.xml",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_cab_background_top_material.xml"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\call_icon.png",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\call_icon.png"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\abc_dialog_material_background_dark.xml",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_dialog_material_background_dark.xml"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\design_fab_background.xml",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.0.0\\res\\drawable\\design_fab_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\abc_dialog_material_background_light.xml",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_dialog_material_background_light.xml"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\plus_white.png",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\plus_white.png"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\abc_tab_indicator_material.xml",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_tab_indicator_material.xml"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\abc_ratingbar_full_material.xml",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_ratingbar_full_material.xml"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\abc_btn_colored_material.xml",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_btn_colored_material.xml"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\abc_edit_text_material.xml",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_edit_text_material.xml"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\rocheicon.jpg",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\rocheicon.jpg"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\cont_mail_icon.png",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\cont_mail_icon.png"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\pic3.jpg",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\pic3.jpg"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\plus_black.png",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\plus_black.png"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\sample_5.jpg",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\sample_5.jpg"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\call.png",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\call.png"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\sample_4.jpg",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\sample_4.jpg"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\goback.jpg",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\goback.jpg"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\abc_btn_borderless_material.xml",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_btn_borderless_material.xml"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\abc_textfield_search_material.xml",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_textfield_search_material.xml"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\cont_phone_icon.png",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\cont_phone_icon.png"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\abc_switch_thumb_material.xml",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_switch_thumb_material.xml"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\mail_icon.png",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\mail_icon.png"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\release\\drawable\\abc_seekbar_thumb_material.xml",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_seekbar_thumb_material.xml"
+    }
+]
