@@ -20,20 +20,8 @@
         "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.13.2\\res\\drawable\\com_facebook_button_background.xml"
     },
     {
-        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\pic19.jpg",
-        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\pic19.jpg"
-    },
-    {
         "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_list_selector_background_transition_holo_light.xml",
         "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_list_selector_background_transition_holo_light.xml"
-    },
-    {
-        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\pic5.jpg",
-        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\pic5.jpg"
-    },
-    {
-        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\sample_2.jpg",
-        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\sample_2.jpg"
     },
     {
         "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\cont_mail_icon.png",
@@ -52,20 +40,12 @@
         "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_tab_indicator_material.xml"
     },
     {
-        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\sample_6.jpg",
-        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\sample_6.jpg"
-    },
-    {
         "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\plus.png",
         "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\plus.png"
     },
     {
         "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\plus_white.png",
         "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\plus_white.png"
-    },
-    {
-        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\sample_0.jpg",
-        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\sample_0.jpg"
     },
     {
         "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_seekbar_thumb_material.xml",
@@ -100,10 +80,6 @@
         "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_item_background_holo_light.xml"
     },
     {
-        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\sample_3.jpg",
-        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\sample_3.jpg"
-    },
-    {
         "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\com_facebook_button_like_background.xml",
         "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.13.2\\res\\drawable\\com_facebook_button_like_background.xml"
     },
@@ -114,10 +90,6 @@
     {
         "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\com_facebook_auth_dialog_header_background.xml",
         "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.13.2\\res\\drawable\\com_facebook_auth_dialog_header_background.xml"
-    },
-    {
-        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\pic7.jpg",
-        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\pic7.jpg"
     },
     {
         "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\person_icon.png",
@@ -138,10 +110,6 @@
     {
         "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_switch_thumb_material.xml",
         "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_switch_thumb_material.xml"
-    },
-    {
-        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\pic3.jpg",
-        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\pic3.jpg"
     },
     {
         "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ratingbar_small_material.xml",
@@ -184,24 +152,16 @@
         "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_ratingbar_indicator_material.xml"
     },
     {
-        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\sample_5.jpg",
-        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\sample_5.jpg"
-    },
-    {
-        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\pic10.jpg",
-        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\pic10.jpg"
-    },
-    {
-        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\pic8.jpg",
-        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\pic8.jpg"
-    },
-    {
         "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ratingbar_full_material.xml",
         "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_ratingbar_full_material.xml"
     },
     {
         "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_colored_material.xml",
         "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable\\abc_btn_colored_material.xml"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\fb_logo_icon.png",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\fb_logo_icon.png"
     },
     {
         "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\com_facebook_button_login_silver_background.xml",
@@ -236,12 +196,8 @@
         "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\goback.jpg"
     },
     {
-        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\sample_4.jpg",
-        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\sample_4.jpg"
-    },
-    {
-        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\sample_1.jpg",
-        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\sample_1.jpg"
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\sync_icon.png",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\sync_icon.png"
     },
     {
         "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_default_mtrl_shape.xml",
@@ -258,10 +214,6 @@
     {
         "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\com_facebook_button_icon.xml",
         "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.facebook.android\\facebook-android-sdk\\4.13.2\\res\\drawable\\com_facebook_button_icon.xml"
-    },
-    {
-        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\sample_7.jpg",
-        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\drawable\\sample_7.jpg"
     },
     {
         "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\phone_icon.png",

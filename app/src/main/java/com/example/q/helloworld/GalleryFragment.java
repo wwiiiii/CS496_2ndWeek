@@ -43,17 +43,7 @@ public class GalleryFragment extends Fragment {
     }
 
     public Integer[] mThumbIds = {
-            R.drawable.pic19, R.drawable.pic10,
-            R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7,
-            R.drawable.pic8, R.drawable.pic3,
-            R.drawable.pic10, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.pic7,
-            R.drawable.pic8, R.drawable.sample_7,
-            R.drawable.sample_0, R.drawable.sample_1,
-            R.drawable.sample_2, R.drawable.pic5,
-            R.drawable.pic8, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7
+
     };
     private ViewPager pager;
     private NewAdapter adapter;

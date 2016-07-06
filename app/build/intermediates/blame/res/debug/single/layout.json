@@ -80,6 +80,10 @@
         "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\layout\\support_simple_spinner_dropdown_item.xml"
     },
     {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_integrated_login.xml",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\layout\\activity_integrated_login.xml"
+    },
+    {
         "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_search_dropdown_item_icons_2line.xml",
         "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\layout\\abc_search_dropdown_item_icons_2line.xml"
     },
@@ -120,12 +124,12 @@
         "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\layout\\notification_media_action.xml"
     },
     {
-        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\layout\\my_item_view.xml",
-        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\layout\\my_item_view.xml"
-    },
-    {
         "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_media.xml",
         "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\layout\\notification_template_media.xml"
+    },
+    {
+        "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\layout\\my_item_view.xml",
+        "source": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\src\\main\\res\\layout\\my_item_view.xml"
     },
     {
         "merged": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_simple.xml",

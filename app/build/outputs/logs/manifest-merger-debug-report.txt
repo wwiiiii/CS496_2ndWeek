@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\q\AndroidStudioProjects\Helloworld\app\src\main\AndroidManifest.xml:2:1-54:12
+ADDED from C:\Users\q\AndroidStudioProjects\Helloworld\app\src\main\AndroidManifest.xml:2:1-59:12
 	package
 		ADDED from C:\Users\q\AndroidStudioProjects\Helloworld\app\src\main\AndroidManifest.xml:3:5-39
 		INJECTED from C:\Users\q\AndroidStudioProjects\Helloworld\app\src\main\AndroidManifest.xml
@@ -44,7 +44,7 @@ ADDED from C:\Users\q\AndroidStudioProjects\Helloworld\app\src\main\AndroidManif
 	android:normalScreens
 		ADDED from C:\Users\q\AndroidStudioProjects\Helloworld\app\src\main\AndroidManifest.xml:17:9-37
 application
-ADDED from C:\Users\q\AndroidStudioProjects\Helloworld\app\src\main\AndroidManifest.xml:24:5-52:19
+ADDED from C:\Users\q\AndroidStudioProjects\Helloworld\app\src\main\AndroidManifest.xml:24:5-57:19
 MERGED from [com.android.support:appcompat-v7:23.4.0] C:\Users\q\AndroidStudioProjects\Helloworld\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.4.0\AndroidManifest.xml:25:5-20
 MERGED from [com.android.support:animated-vector-drawable:23.4.0] C:\Users\q\AndroidStudioProjects\Helloworld\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\23.4.0\AndroidManifest.xml:7:5-20
 MERGED from [com.android.support:support-vector-drawable:23.4.0] C:\Users\q\AndroidStudioProjects\Helloworld\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\23.4.0\AndroidManifest.xml:7:5-20
@@ -93,7 +93,7 @@ ADDED from C:\Users\q\AndroidStudioProjects\Helloworld\app\src\main\AndroidManif
 	android:name
 		ADDED from C:\Users\q\AndroidStudioProjects\Helloworld\app\src\main\AndroidManifest.xml:34:27-74
 activity#com.example.q.helloworld.addActivity
-ADDED from C:\Users\q\AndroidStudioProjects\Helloworld\app\src\main\AndroidManifest.xml:37:9-40:68
+ADDED from C:\Users\q\AndroidStudioProjects\Helloworld\app\src\main\AndroidManifest.xml:37:9-40:59
 	android:label
 		ADDED from C:\Users\q\AndroidStudioProjects\Helloworld\app\src\main\AndroidManifest.xml:39:13-58
 	android:theme
@@ -118,9 +118,15 @@ ADDED from C:\Users\q\AndroidStudioProjects\Helloworld\app\src\main\AndroidManif
 	android:name
 		ADDED from C:\Users\q\AndroidStudioProjects\Helloworld\app\src\main\AndroidManifest.xml:48:13-58
 activity#com.example.q.helloworld.LoginActivity
-ADDED from C:\Users\q\AndroidStudioProjects\Helloworld\app\src\main\AndroidManifest.xml:51:9-60
+ADDED from C:\Users\q\AndroidStudioProjects\Helloworld\app\src\main\AndroidManifest.xml:51:9-51
 	android:name
 		ADDED from C:\Users\q\AndroidStudioProjects\Helloworld\app\src\main\AndroidManifest.xml:51:19-48
+activity#com.example.q.helloworld.IntegratedLoginActivity
+ADDED from C:\Users\q\AndroidStudioProjects\Helloworld\app\src\main\AndroidManifest.xml:52:9-56:20
+	android:theme
+		ADDED from C:\Users\q\AndroidStudioProjects\Helloworld\app\src\main\AndroidManifest.xml:54:13-56
+	android:name
+		ADDED from C:\Users\q\AndroidStudioProjects\Helloworld\app\src\main\AndroidManifest.xml:53:13-52
 uses-sdk
 INJECTED from C:\Users\q\AndroidStudioProjects\Helloworld\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 MERGED from [com.android.support:multidex:1.0.1] C:\Users\q\AndroidStudioProjects\Helloworld\app\build\intermediates\exploded-aar\com.android.support\multidex\1.0.1\AndroidManifest.xml:18:5-42

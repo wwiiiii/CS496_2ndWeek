@@ -10,26 +10,6 @@
         android:id="@+id/listView"
         android:focusable="true" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="reconnect"
-        android:id="@+id/button_recon"
-        android:layout_gravity="right|center_vertical" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="LOGIN"
-        android:id="@+id/mylogin"
-        android:layout_gravity="left|bottom" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SEND CONTACT"
-        android:id="@+id/send_contact"
-        android:layout_gravity="left|center_vertical" />
     <ImageButton
         android:layout_width="62dp"
         android:layout_height="wrap_content"
@@ -38,12 +18,52 @@
         android:layout_gravity="right|bottom"
         android:scaleType="fitCenter"
         android:background="@android:color/transparent" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="reconnect"
+        android:id="@+id/button_recon"
+        android:layout_gravity="center" />
+
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="left|bottom"
+        android:layout_gravity="right|top"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="30dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LOGIN"
+        android:id="@+id/mylogin"
+        android:layout_gravity="center_horizontal|bottom" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SEND CONTACT"
+        android:id="@+id/send_contact"
+        android:layout_gravity="left|bottom"
+        android:src = "@drawable/sync_icon"
+        android:scaleType="fitCenter"
+        android:background="@android:color/transparent" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fb login test"
+        android:id="@+id/fbloginbut"
+        android:layout_gravity="right|center_vertical"
+        android:allowUndo="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="INTG_LOGIN"
+        android:id="@+id/INTG_LOGIN"
+        android:layout_gravity="left|center_vertical" />
 
 </FrameLayout>

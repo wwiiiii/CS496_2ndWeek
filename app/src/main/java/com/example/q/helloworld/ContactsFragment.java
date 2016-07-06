@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Message;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
@@ -45,6 +47,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.LogRecord;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -52,6 +55,7 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.github.nkzawa.emitter.Emitter;
@@ -64,6 +68,10 @@ import javax.net.ssl.HttpsURLConnection;
 public class ContactsFragment extends Fragment {
 
     private static int ADD_LIST_CONTACT = 424;
+    private static int UPDATE_LOGIN_STATUS = 12345;
+    private static int INTEGRATED_LOGIN = 4524;
+    private static int DO_FACEBOOK_LOG = 1;
+    private static int DO_APP_LOG = 0;
     private static final String TAG_CONTACTS = "contacts";
     private static final String TAG_ID = "id";
     private static final String TAG_NAME = "name";
@@ -78,7 +86,7 @@ public class ContactsFragment extends Fragment {
     final String SERVER_IP = "52.78.66.95";
     JSONObject myInfo;//{myId : facebook id}
     private Socket mSocket;
-
+    Handler handler;
     // contacts JSONArray
     JSONArray contacts = null;
     String jsonPath;
@@ -108,6 +116,25 @@ public class ContactsFragment extends Fragment {
         try{
             mSocket = IO.socket("http://"+SERVER_IP+":8124");
         } catch (Exception e) {debug(e.toString());}
+        handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                debug("msg called!");
+                Collections.sort(contactList, new Comparator<Person>() {
+                    @Override
+                    public int compare(Person lhs, Person rhs) {
+                        try {
+                            String lid = lhs.name;
+                            String rid = rhs.name;
+                            return lid.compareTo(rid);
+                        }catch(Exception e){}
+                        return 1;
+                    }
+                });
+                Adapter.notifyDataSetChanged();
+            }
+        };
+
         mSocket.connect();
         mSocket.off("initres"); mSocket.off("uploadPhoneContactres"); mSocket.off();
         mSocket.on("initres", handleNewChat);
@@ -116,16 +143,25 @@ public class ContactsFragment extends Fragment {
             public void call(final Object... args) {
                 String res = "";
                 for(int i=0;i<args.length;i++) res += args[i].toString();
-                debug(res);
+                //debug(res);
                 mSocket.emit("updateContact");
             }
         });
         mSocket.on("updateContactres",  new Emitter.Listener() {
             @Override
             public void call(final Object... args) {
-                String res = "";
-                for(int i=0;i<args.length;i++) res += args[i].toString();
-                debug(res);
+                try {
+                    JSONArray ContactArr = (JSONArray) args[0];
+                    contactList.clear();
+                    ArrayList<Person> tt = jsonArrToList(ContactArr);
+                    for(Person i : tt) contactList.add(i);
+                    debug("called!");
+                    //for (int i = 0; i < ContactArr.length(); i++)debug(ContactArr.get(i).toString());
+                    Message msg = handler.obtainMessage();
+                    handler.sendMessage(msg);
+                } catch(Exception e){
+                    debug("uCres error " + e.toString());
+                }
             }
         });
     }
@@ -148,11 +184,12 @@ public class ContactsFragment extends Fragment {
 
 
         //ListView settings
+        contactList = new ArrayList<Person>();
         Adapter = new PersonAdapter(
                 getContext(), R.layout.my_item_view, contactList
         );
         ListView list = (ListView)view.findViewById(R.id.listView);
-//        list.setAdapter(Adapter);
+        list.setAdapter(Adapter);
 
         //ButtonListener settings
         ImageButton butimg = (ImageButton)view.findViewById(R.id.button);
@@ -164,16 +201,20 @@ public class ContactsFragment extends Fragment {
         });
         list.setOnItemLongClickListener(new ListViewItemLongClickListener());
 
+        Button asdf = (Button)view.findViewById(R.id.INTG_LOGIN);
+        asdf.setOnClickListener(
+                new Button.OnClickListener(){
+                    public void onClick(View v){
+                        callIntgLogin();
+                    }
+                }
+        );
         Button but2 = (Button)view.findViewById(R.id.button_recon);
         but2.setOnClickListener(null);
         but2.setOnClickListener(
                 new Button.OnClickListener(){
                     public void onClick(View v){
-                        debug("reconnected");
-                        try{
-                            mSocket = IO.socket("http://"+SERVER_IP+":8124");
-                            mSocket.connect();
-                        } catch (Exception e) {debug(e.toString());}
+                        SockReconnect();
                     }
                 }
         );
@@ -186,7 +227,16 @@ public class ContactsFragment extends Fragment {
                 }
         );
 
-        Button sendbut = (Button)view.findViewById(R.id.send_contact);
+        Button fbloginbut = (Button)view.findViewById(R.id.fbloginbut);
+        fbloginbut.setOnClickListener(
+                new Button.OnClickListener() {
+                    public void onClick(View v) {
+                        myFBlogin();
+                    }
+                }
+        );
+
+        ImageButton sendbut = (ImageButton)view.findViewById(R.id.send_contact);
         sendbut.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
@@ -196,6 +246,29 @@ public class ContactsFragment extends Fragment {
         );
 
         if(AccessToken.getCurrentAccessToken() != null)   debug("Token is " + AccessToken.getCurrentAccessToken().getToken().toString());
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        Toast.makeText(getContext(), "succeed!", Toast.LENGTH_SHORT).show();
+                        debug("success in fb login");
+                        debug("Token is " + loginResult.getAccessToken().getToken().toString());
+                        debug("current Token is " + AccessToken.getCurrentAccessToken().getToken().toString());
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Toast.makeText(getContext(), "cancel!", Toast.LENGTH_SHORT).show();
+                        debug("cancel in fb login");
+                    }
+
+                    @Override
+                    public void onError(FacebookException error) {
+                        Toast.makeText(getContext(), "error\n" + error.toString(), Toast.LENGTH_SHORT).show();
+                        debug("error in fb login " + error.toString());
+                    }
+                });
+
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -209,7 +282,6 @@ public class ContactsFragment extends Fragment {
             public void onCancel() {
                 Toast.makeText(getContext(), "cancel!", Toast.LENGTH_SHORT).show();
                 debug("cancel in fb login");
-                debug("current Token is " + AccessToken.getCurrentAccessToken().toString());
             }
 
             @Override
@@ -218,10 +290,7 @@ public class ContactsFragment extends Fragment {
                 debug("error in fb login " + error.toString());
             }
         });
-        try{
-            mSocket = IO.socket("http://"+SERVER_IP+":8124");
-            mSocket.connect();
-        } catch (Exception e) {debug(e.toString());}
+        SockReconnect();
         updateLoginStatus(view);
 
         return view;
@@ -231,37 +300,37 @@ public class ContactsFragment extends Fragment {
         Log.v("mydebug",str);
     }
 
+    public String[] JsonArrToStringArr(JSONArray jsonArr)
+    {
+        String[] res = new String[1]; res[0] = "";
+        if(jsonArr == null || jsonArr.length() == 0) return res;
+        try {
+            res = new String[jsonArr.length()];
+            for (int i = 0; i < res.length; i++) res[i] = jsonArr.get(i).toString();
+            return res;
+        } catch(Exception e){
+            debug("jarr to sarr error " + e.toString());
+            return res;
+        }
+    }
 
-    protected ArrayList<Person> jsonStringToList(String jsonStr)
+    protected ArrayList<Person> jsonArrToList(JSONArray contactArr)
     {
         ArrayList<Person> res = new ArrayList<Person>();
-        if (jsonStr != null) {
+        if (contactArr.length() > 0) {
             try {
-                JSONObject jsonObj = new JSONObject(jsonStr);
-                contacts = jsonObj.getJSONArray(TAG_CONTACTS);
-
-                // looping through All Contacts
+                contacts = contactArr;
+//Person(String _name, String[] _email, String[] _mobile, String[] _other, String _src, int _id)
                 for (int i = 0; i < contacts.length(); i++) {
                     JSONObject c = contacts.getJSONObject(i);
-
-                    //String id = c.getString(TAG_ID);
-                    String name = c.getString(TAG_NAME);
-                    String email = c.getString(TAG_EMAIL);
-                    //String address = c.getString(TAG_ADDRESS);
-                    //String gender = c.getString(TAG_GENDER);
-
-                    // Phone node is JSON ObjectString mobile
-                    String mobile = "";
-                    if(c.has("phone") && !c.isNull("phone")) {
-                        JSONObject phone = c.getJSONObject(TAG_PHONE);
-                        mobile = phone.getString(TAG_PHONE_MOBILE);
-                        //String home = phone.getString(TAG_PHONE_HOME);
-                        //String office = phone.getString(TAG_PHONE_OFFICE);
-                    }
-                    else mobile = c.getString("mobile");
-
-                    Person contact = new Person(name,email,mobile);
-
+                    String id = "", src="", name="";
+                    String[] email, phone, other;
+                    email = new String[1]; email[0] =""; phone = new String[1]; phone[0] ="";other = new String[1]; other[0] ="";
+                    id = c.getString(TAG_ID); name = c.getString(TAG_NAME); src = c.getString("src");
+                    if(c.has("email")) email = JsonArrToStringArr(c.getJSONArray("email"));
+                    if(c.has("phone")) phone = JsonArrToStringArr(c.getJSONArray("phone"));
+                    if(c.has("other")) other = JsonArrToStringArr(c.getJSONArray("other"));
+                    Person contact = new Person(name,email,phone,other,src,id);
                     // adding contact to contact list
                     res.add(contact);
                 }
@@ -269,9 +338,9 @@ public class ContactsFragment extends Fragment {
                 debug("jsonStr to List error : " + e.toString());
             }
         }
-        res.add(new Person("","",""));
         return res;
     }
+
     public void buttonPushed(View view)
     {
         vibrator.vibrate(1000);
@@ -298,34 +367,42 @@ public class ContactsFragment extends Fragment {
         debug("onActivity called");
         if(requestCode == ADD_LIST_CONTACT) {
             if (resultCode == Activity.RESULT_OK) {
-
+/*
                     String name = data.getStringExtra("data_name");
                     String email = data.getStringExtra("data_email");
                     String mobile = data.getStringExtra("data_mobile");
                     Person newb = new Person(name, email, mobile);
-                    contactList.add(contactList.size() - 1, newb);
+                    contactList.add(contactList.size(), newb);
                     //savePersonToInternal(newb);
                     //sortContact();
-                    Adapter.notifyDataSetChanged();
+                    Adapter.notifyDataSetChanged();*/
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 Toast.makeText(getContext(), "Input Canceled!", Toast.LENGTH_SHORT);
             }
-        } else if (requestCode == 12345){
+        } else if (requestCode == UPDATE_LOGIN_STATUS){
             updateLoginStatus(null);
-        } else{
+        } else if (requestCode == INTEGRATED_LOGIN){
+            if(resultCode == DO_APP_LOG){
+                callLogin();
+            } else if(resultCode == DO_FACEBOOK_LOG){
+                myFBlogin();
+            }
+        }else{
             callbackManager.onActivityResult(requestCode,   resultCode, data);
         }
     }
     class Person{
         public String name;
-        public String email;
-        public String mobile;
+        public String[] email;
+        public String[] phone;
+        public String[] other;
+        public String src;
+        public String id;
 
-        public Person(String _name, String _email, String _mobile)
+        public Person(String _name, String[] _email, String[] _phone, String[] _other, String _src, String _id)
         {
-            this.name = _name;
-            this.email = _email;
-            this.mobile = _mobile;
+            this.name = _name; this.email = _email; this.other = _other;
+            this.phone = _phone; this.src = _src; this.id = _id;
         }
 
     }
@@ -354,10 +431,13 @@ public class ContactsFragment extends Fragment {
                     nameV.setText(p.name);
                 }
                 if (emailV != null) {
-                    emailV.setText(p.email);
+                    if(p.email[0].equals("")) emailV.setText("None");
+                    else emailV.setText(p.email[0]);
+
                 }
                 if (mobileV != null) {
-                    mobileV.setText(p.mobile);
+                    if(p.phone[0].equals("")) mobileV.setText("None");
+                    else mobileV.setText(p.phone[0]);
                 }
             }
             ImageButton button = (ImageButton) v.findViewById(R.id.call);
@@ -510,7 +590,7 @@ public class ContactsFragment extends Fragment {
         //Login
         if(acc == null) {
             Intent intent = new Intent(getContext(), LoginActivity.class);
-            startActivityForResult(intent, 12345);
+            startActivityForResult(intent, UPDATE_LOGIN_STATUS);
         }
 
         //Logout
@@ -595,16 +675,16 @@ public class ContactsFragment extends Fragment {
                             else now.getJSONArray("other").put(num);
                         }
                         if (photo!=null && !photo.equals(" ")) now.put("photo", photo);
-                    } catch(Exception e){debug(e.toString());}
+                    } catch(Exception e){debug("getCL err : " + e.toString());}
                     temp.put(id,now);
                 }
-                debug(id+name+num+email+photo);
+                //debug(id+name+num+email+photo);
             } while (mCursor.moveToNext());
         }
         mCursor.close();
         for(Map.Entry<String, JSONObject> i : temp.entrySet())
         {
-            debug(i.getKey().toString() + i.getValue().toString());
+            //debug(i.getKey().toString() + i.getValue().toString());
             res.add(i.getValue());
         }
         return res;
@@ -628,7 +708,7 @@ public class ContactsFragment extends Fragment {
             renewMyInfo();
             if(myInfo!=null) arg.put("fbinfo",myInfo);
             mSocket.emit("uploadPhoneContact", arg);
-        } catch(Exception e){debug(e.toString());}
+        } catch(Exception e){debug("sLC err : " + e.toString());}
     }
 
     public boolean isEmailAddress(String str)
@@ -679,9 +759,36 @@ public class ContactsFragment extends Fragment {
                 t.wait();
             }
         }catch(Exception e){
-            debug(e.toString());
+            debug("renew my info err" + e.toString());
         }
 
     }
 
+    public void SockReconnect()
+    {
+        debug("reconnected");
+        try{
+            mSocket = IO.socket("http://"+SERVER_IP+":8124");
+            mSocket.connect();
+        } catch (Exception e) {debug("reconnect error " + e.toString());}
+    }
+
+    public void myFBlogin()
+    {
+        if(AccessToken.getCurrentAccessToken() == null) {
+            List<String> perm = new ArrayList<String>();
+            perm.add("user_friends");
+            perm.add("public_profile");
+            perm.add("email");
+            LoginManager.getInstance().logInWithReadPermissions(this, perm);
+        } else{
+            LoginManager.getInstance().logOut();
+        }
+    }
+
+    public void callIntgLogin()
+    {
+        Intent intent = new Intent(getContext(), IntegratedLoginActivity.class);
+        startActivityForResult(intent, INTEGRATED_LOGIN);
+    }
 }
