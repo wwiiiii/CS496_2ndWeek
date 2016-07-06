@@ -19,4 +19,14 @@
         android:scaleType="fitCenter"
         android:background="@android:color/transparent" />
 
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SEND CONTACT"
+        android:id="@+id/send_contact"
+        android:layout_gravity="left|bottom"
+        android:src = "@drawable/sync_icon"
+        android:scaleType="fitCenter"
+        android:background="@android:color/transparent" />
+
 </FrameLayout>

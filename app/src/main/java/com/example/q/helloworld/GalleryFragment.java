@@ -1,22 +1,37 @@
 package com.example.q.helloworld;
-
-import android.content.Context;
+import android.app.Activity;
+import android.content.ActivityNotFoundException;
+import android.content.CursorLoader;
+import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
+import android.support.v7.view.menu.ActionMenuItemView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
-import android.widget.GridView;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
-import android.widget.ViewSwitcher;
+
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+import com.koushikdutta.ion.Response;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.concurrent.Future;
+
+import cz.msebera.android.httpclient.Header;
 
 ///**
 // * A simple {@link Fragment} subclass.
@@ -27,210 +42,142 @@ import android.widget.ViewSwitcher;
 // * create an instance of this fragment.
 // */
 public class GalleryFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-//    private static final String ARG_PARAM1 = "param1";
-//    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-//    private String mParam1;
-//    private String mParam2;
-
-//    private OnFragmentInteractionListener mListener;
 
     public GalleryFragment() {
         // Required empty public constructor
     }
 
-    public Integer[] mThumbIds = {
-            R.drawable.pic19, R.drawable.pic10,
-            R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7,
-            R.drawable.pic8, R.drawable.pic3,
-            R.drawable.pic10, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.pic7,
-            R.drawable.pic8, R.drawable.sample_7,
-            R.drawable.sample_0, R.drawable.sample_1,
-            R.drawable.sample_2, R.drawable.pic5,
-            R.drawable.pic8, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7
-    };
-    private ViewPager pager;
-    private NewAdapter adapter;
-    private ViewSwitcher viewSwitcher;
-    private boolean isZoom=false;
-    private float sizeX;
-    private float sizeY;
-    protected class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
-        ViewPager mPager;
-        public ScaleListener(ViewPager pager) {
-            mPager=pager;
-        }
-        @Override
-        public boolean onScale(ScaleGestureDetector detector) {
-            float scaleFactor = detector.getScaleFactor();
-            scaleFactor = Math.max(0.1f, Math.min(scaleFactor, 5.0f));
-//            Log.d("pager",""+scaleFactor);
-//            Log.d("pager",""+mPager.getCurrentItem());
-//            FrameLayout currentBox=(FrameLayout)mPager.findViewWithTag("pager"+mPager.getCurrentItem());
-            View currentView=mPager.findViewWithTag("pager"+mPager.getCurrentItem());
-//            Log.d("pager","box : "+currentBox.getClass().toString());
-//            View currentView = ((LinearLayout)currentBox.getChildAt(0)).getChildAt(0);
-//            Log.d("pager","view : "+currentView.getClass().toString());
-//            mPager.getAdapter().getItem;
-//            View currentView=mPager.getFocusedChild();
-//            Log.d("pager","current scaleX : "+currentView.getScaleX());
-            sizeX=currentView.getScaleX();
-//            Log.d("pager","sizeX : "+currentView.getScaleX());
-            Log.d("pager","scaleFactor : "+scaleFactor);
-            sizeY=currentView.getScaleY();
-            currentView.setScaleX(sizeX*scaleFactor);
-//            Log.d("pager","sizeX : "+currentView.getScaleX());
-            currentView.setScaleY(sizeY*scaleFactor);
-//            float sizeX=mPager.getScaleX();
-//            float sizeY=mPager.getScaleY();
-//            mPager.setScaleX(sizeX*scaleFactor);
-//            mPager.setScaleY(sizeY*scaleFactor);
-//            mPager.getChildAt(mPager.getCurrentItem()).setScaleY(scaleFactor);
-            return true;
-        }
-    }
-    private ScaleGestureDetector scaleGestureDetector;
-
-    public void BackToGrid(View v){
-        viewSwitcher.showNext();
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment GalleryFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static GalleryFragment newInstance(String param1, String param2) {
+    public static GalleryFragment newInstance() {
         GalleryFragment fragment = new GalleryFragment();
         Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
+
         fragment.setArguments(args);
         return fragment;
     }
+    ///////////////////////////////////////////////////////////////////////////////////////
+
+    ActionMenuItemView gallery, upload, download, loginmenu;
+    ImageView img;
+    String path;
+    ArrayList<String> url_list = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
+    private String getPathFromURI(Uri contentUri) {
+        String[] proj = { MediaStore.Images.Media.DATA };
+        CursorLoader loader = new CursorLoader(getContext(), contentUri, proj, null, null, null);
+        Cursor cursor = loader.loadInBackground();
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }
+    /**
+     * Permission check.
+     */
+
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_gallery, container, false);
-        viewSwitcher = (ViewSwitcher)view.findViewById(R.id.viewSwitcher);
-        Animation inAnimation = AnimationUtils.loadAnimation(view.getContext(), android.R.anim.slide_in_left); inAnimation.setDuration(500);
-        Animation outAnimation = AnimationUtils.loadAnimation(view.getContext(), android.R.anim.slide_out_right); outAnimation.setDuration(500);
-        viewSwitcher.setOutAnimation(outAnimation);
-        viewSwitcher.setInAnimation(inAnimation);
-        {
-            GridView gridView = (GridView) view.findViewById(R.id.gridView);
-            gridView.setAdapter(new ImageAdapter(this));
-            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Toast.makeText(view.getContext(), "" + position, Toast.LENGTH_SHORT).show();
-                    pager.setCurrentItem(position, true);
-                    viewSwitcher.showNext();
-                }
-            });
-//            System.out.println("============================");
-//            viewSwitcher.addView(gridView);
-        }
-        {
-            pager = (ViewPager) view.findViewById(R.id.main_viewPager);
-            adapter = new NewAdapter(this.getActivity().getLayoutInflater(), this);
-            pager.setAdapter(adapter);
-            pager.setPageTransformer(false, new ViewPager.PageTransformer() {
-                @Override
-                public void transformPage(View page, float position) {
-                    float normalizedposition = Math.abs(1 - Math.abs(position));
-
-                    page.setAlpha(normalizedposition);  //View의 투명도 조절
-                    page.setScaleX(normalizedposition / 2 + 0.5f); //View의 x축 크기조절
-                    page.setScaleY(normalizedposition / 2 + 0.5f); //View의 y축 크기조절
-                    page.setRotationY(position * 80);   //View의 Y축(세로축) 회전 각도
-                }
-            });
-
-            scaleGestureDetector=new ScaleGestureDetector(view.getContext(), new ScaleListener(pager));
-            pager.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    int act=event.getAction();
-                    switch(act&MotionEvent.ACTION_MASK) {
-                        case MotionEvent.ACTION_POINTER_DOWN:
-                            if(!isZoom)
-                                isZoom=true;
-                            break;
-                        case MotionEvent.ACTION_DOWN :
-                            break;
-                        case MotionEvent.ACTION_UP:
-                            isZoom=false;
-                            break;
-                        case MotionEvent.ACTION_MOVE:
-//                            if(!isZoom) return false;
+        img = (ImageView)view.findViewById(R.id.preview);
+        gallery = (ActionMenuItemView)getActivity().findViewById(R.id.action_gallery);
+        upload =(ActionMenuItemView)getActivity().findViewById(R.id.action_upload);
+        download = (ActionMenuItemView)getActivity().findViewById(R.id.action_download);
+        loginmenu = (ActionMenuItemView)getActivity().findViewById(R.id.action_login);
+        loginmenu.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Log.d("onononon","**********************************************");
+            }
+        });
+        download.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                File f = new File(path);
+                Log.v("파일", "http://143.248.48.39:3000/uploads"+"/"+ f.getName());
+                AsyncHttpClient client = new AsyncHttpClient();
+                final String url = "http://143.248.48.39:3000/uploads"+"/"+ f.getName();
+                client.get(url, new AsyncHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                        String URL = new String(responseBody, StandardCharsets.UTF_8);
+                        url_list.add(URL);
+                        Log.v("URL", Integer.toString(url_list.size()));
+                        Intent intent = new Intent(getContext(), grid.class);
+                        intent.putStringArrayListExtra("URL_LIST", url_list);
+                        startActivity(intent);
                     }
-                    scaleGestureDetector.onTouchEvent(event);
-                    return false;
-                }
-            });
-        }
 
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                        Toast.makeText(getContext(),"onFail",Toast.LENGTH_LONG);
+                    }
+                });
+            }
+
+        });
+        upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                File f = new File(path);
+
+                Future uploading = Ion.with(getActivity())
+                        .load("http://143.248.48.39:3000/uploads")
+                        .setMultipartFile("image", f)
+                        .asString()
+                        .withResponse()
+                        .setCallback(new FutureCallback<Response<String>>() {
+                            @Override
+                            public void onCompleted(Exception e, Response<String> result) {
+                                try {
+                                    JSONObject jobj = new JSONObject(result.getResult());
+                                    Toast.makeText(getContext(), jobj.getString("response"), Toast.LENGTH_SHORT).show();
+
+                                } catch (JSONException e1) {
+                                    e1.printStackTrace();
+                                }
+                            }
+                        });
+            }
+
+        });
+
+        gallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent fintent = new Intent(Intent.ACTION_GET_CONTENT);
+                fintent.setType("image/jpg");
+                try {
+                    startActivityForResult(fintent, 100);
+                } catch (ActivityNotFoundException e) {
+
+                }
+            }
+        });
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-//        if (mListener != null) {
-//            mListener.onFragmentInteraction(uri);
-//        }
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null)
+            return;
+        switch (requestCode) {
+            case 100:
+                if (resultCode == Activity.RESULT_OK){
+                    Log.v("에러", getPathFromURI(data.getData()));
+                    path = getPathFromURI(data.getData());
+                    img.setImageURI(data.getData());
+                    upload.setVisibility(View.VISIBLE);
+                }
+        }
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
+    public void onSaveInstanceState(Bundle outState) {
+        //No call for super(). Bug on API Level > 11.
     }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-//        mListener = null;
-    }
-
-//    /**
-//     * This interface must be implemented by activities that contain this
-//     * fragment to allow an interaction in this fragment to be communicated
-//     * to the activity and potentially other fragments contained in that
-//     * activity.
-//     * <p/>
-//     * See the Android Training lesson <a href=
-//     * "http://developer.android.com/training/basics/fragments/communicating.html"
-//     * >Communicating with Other Fragments</a> for more information.
-//     */
-//    public interface OnFragmentInteractionListener {
-//        // TODO: Update argument type and name
-//        void onFragmentInteraction(Uri uri);
-//    }
 }

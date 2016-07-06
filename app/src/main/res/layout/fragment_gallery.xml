@@ -2,49 +2,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.q.helloworld.GalleryFragment">
+    tools:context=".GalleryFragment">
 
-    <ViewSwitcher
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/viewSwitcher" >
-
-        <GridView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-
-            android:numColumns="3"
-            android:verticalSpacing="10dp"
-            android:horizontalSpacing="10dp"
-            android:stretchMode="columnWidth"
-            android:id="@+id/gridView" />
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
-
-            <android.support.design.widget.FloatingActionButton
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:scaleType="fitCenter"
-                android:id="@+id/imageButton"
-                android:layout_margin="@dimen/fab_margin"
-                android:layout_gravity="bottom|end"
-                android:onClick="galleryBackToGrid"
-                android:src="@drawable/goback"/>
-
-            <android.support.v4.view.ViewPager
-                android:id="@+id/main_viewPager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:foregroundGravity="center">
-
-            </android.support.v4.view.ViewPager>
-        </FrameLayout>
-
-    </ViewSwitcher>
+    <!-- TODO: Update blank fragment layout -->
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginBottom = "50dp"
+        android:id="@+id/preview"
+        android:layout_gravity="left|top" />
 
 </FrameLayout>

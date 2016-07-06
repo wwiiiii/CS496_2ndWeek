@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Roche</string>
+    <string name="app_name">CS496_2ndWeek</string>
     <string name="title_activity_add">Sign in</string>
     <string name="title_activity_dialog">사용자 추가</string>
     <!-- Strings related to login -->
@@ -14,4 +14,9 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="facebook_app_id">1121318844599794</string>
+    <string name="action_upload">upload</string>
+    <string name="action_download">download</string>
+    <string name="action_login">login</string>
+    <string name="action_gallery">gallery</string>
 </resources>

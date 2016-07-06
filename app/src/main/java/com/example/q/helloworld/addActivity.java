@@ -64,4 +64,9 @@ public class addActivity extends Activity {
         setResult(RESULT_CANCELED, getIntent());
         finish();
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        //No call for super(). Bug on API Level > 11.
+    }
 }

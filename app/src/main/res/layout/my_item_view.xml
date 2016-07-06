@@ -15,6 +15,14 @@
         <!--android:layout_marginLeft="0dp"-->
         <!--/>-->
 
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/profile"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        />
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -107,6 +115,6 @@
         android:clickable="false"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
-        android:layout_marginRight="100dp" />
+        android:layout_marginRight="180dp" />
 
 </LinearLayout>
