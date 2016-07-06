@@ -1,11 +1,14 @@
 package com.example.q.helloworld;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -15,6 +18,7 @@ import android.view.ViewGroup;
 import android.app.Activity;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -34,14 +38,32 @@ import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+import com.github.nkzawa.emitter.Emitter;
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
+
+import javax.net.ssl.HttpsURLConnection;
 
 
 public class ContactsFragment extends Fragment {
 
+    private static int ADD_LIST_CONTACT = 424;
     private static final String TAG_CONTACTS = "contacts";
     private static final String TAG_ID = "id";
     private static final String TAG_NAME = "name";
@@ -52,6 +74,10 @@ public class ContactsFragment extends Fragment {
     private static final String TAG_PHONE_MOBILE = "mobile";
     private static final String TAG_PHONE_HOME = "home";
     private static final String TAG_PHONE_OFFICE = "office";
+    CallbackManager callbackManager;
+    final String SERVER_IP = "52.78.66.95";
+    JSONObject myInfo;//{myId : facebook id}
+    private Socket mSocket;
 
     // contacts JSONArray
     JSONArray contacts = null;
@@ -77,155 +103,132 @@ public class ContactsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//        }
+        FacebookSdk.sdkInitialize(getContext());
+        callbackManager = CallbackManager.Factory.create();
+        try{
+            mSocket = IO.socket("http://"+SERVER_IP+":8124");
+        } catch (Exception e) {debug(e.toString());}
+        mSocket.connect();
+        mSocket.off("initres"); mSocket.off("uploadPhoneContactres"); mSocket.off();
+        mSocket.on("initres", handleNewChat);
+        mSocket.on("uploadPhoneContactres",  new Emitter.Listener() {
+            @Override
+            public void call(final Object... args) {
+                String res = "";
+                for(int i=0;i<args.length;i++) res += args[i].toString();
+                debug(res);
+                mSocket.emit("updateContact");
+            }
+        });
+        mSocket.on("updateContactres",  new Emitter.Listener() {
+            @Override
+            public void call(final Object... args) {
+                String res = "";
+                for(int i=0;i<args.length;i++) res += args[i].toString();
+                debug(res);
+            }
+        });
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v=inflater.inflate(R.layout.fragment_contacts, container, false);
+        View view=inflater.inflate(R.layout.fragment_contacts, container, false);
 
         vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
-        jsonPath = getContext().getFilesDir().getAbsolutePath() + "/Roche";
-        contactList = jsonStringToList(loadJsonData());
+        //contactList = jsonStringToList(loadJsonData());
 
+        //facebook login button settings
+        LoginButton loginButton = (LoginButton) view.findViewById(R.id.login_button);
+        List<String> perm = new ArrayList<String>();
+        perm.add("user_friends"); perm.add("public_profile"); perm.add("email");
+        loginButton.setReadPermissions(perm);
+        loginButton.setFragment(this);
+
+
+        //ListView settings
         Adapter = new PersonAdapter(
                 getContext(), R.layout.my_item_view, contactList
         );
-        ListView list = (ListView)v.findViewById(R.id.listView);
-        list.setAdapter(Adapter);
+        ListView list = (ListView)view.findViewById(R.id.listView);
+//        list.setAdapter(Adapter);
 
-        ImageButton but = (ImageButton)v.findViewById(R.id.button);
-        but.setOnClickListener(new View.OnClickListener() {
+        //ButtonListener settings
+        ImageButton butimg = (ImageButton)view.findViewById(R.id.button);
+        butimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 addListContact();
             }
         });
         list.setOnItemLongClickListener(new ListViewItemLongClickListener());
-        sortContact();
-        return v;
-    }
-    protected String loadJsonDataFromInternal(String dirPath)
-    {
-        String res = "";
-        byte[] b = new byte[BUFFER_SIZE];
-        try {
-            FileInputStream input = new FileInputStream(dirPath + "/mydata.json");
-            input.read(b);
-            res = new String(b).trim();
-            input.close();
-        }catch(Exception e){}
-        return res;
-    }
 
-    protected String loadJsonDataFromRes()
-    {
-        InputStream is = getResources().openRawResource(R.raw.mydata);
-        Writer writer = new StringWriter();
-        char[] buffer = new char[BUFFER_SIZE];
-        try {
-            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-            int n;
-            while ((n = reader.read(buffer)) != -1) {
-                writer.write(buffer, 0, n);
+        Button but2 = (Button)view.findViewById(R.id.button_recon);
+        but2.setOnClickListener(null);
+        but2.setOnClickListener(
+                new Button.OnClickListener(){
+                    public void onClick(View v){
+                        debug("reconnected");
+                        try{
+                            mSocket = IO.socket("http://"+SERVER_IP+":8124");
+                            mSocket.connect();
+                        } catch (Exception e) {debug(e.toString());}
+                    }
+                }
+        );
+        Button loginbut = (Button)view.findViewById(R.id.mylogin);
+        loginbut.setOnClickListener(
+                new Button.OnClickListener() {
+                    public void onClick(View v) {
+                        callLogin();
+                    }
+                }
+        );
+
+        Button sendbut = (Button)view.findViewById(R.id.send_contact);
+        sendbut.setOnClickListener(
+                new Button.OnClickListener() {
+                    public void onClick(View v) {
+                        sendLocalContent();
+                    }
+                }
+        );
+
+        if(AccessToken.getCurrentAccessToken() != null)   debug("Token is " + AccessToken.getCurrentAccessToken().getToken().toString());
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Toast.makeText(getContext(), "succeed!", Toast.LENGTH_SHORT).show();
+                debug("success in fb login");
+                debug("Token is " + loginResult.getAccessToken().getToken().toString());
+                debug("current Token is " + AccessToken.getCurrentAccessToken().getToken().toString());
             }
-        } catch(Exception e){
-        } finally {
-            try{is.close();}
-            catch(Exception e){}
-        }
-        return writer.toString().trim();
+
+            @Override
+            public void onCancel() {
+                Toast.makeText(getContext(), "cancel!", Toast.LENGTH_SHORT).show();
+                debug("cancel in fb login");
+                debug("current Token is " + AccessToken.getCurrentAccessToken().toString());
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Toast.makeText(getContext(), "error\n" + error.toString(), Toast.LENGTH_SHORT).show();
+                debug("error in fb login " + error.toString());
+            }
+        });
+        try{
+            mSocket = IO.socket("http://"+SERVER_IP+":8124");
+            mSocket.connect();
+        } catch (Exception e) {debug(e.toString());}
+        updateLoginStatus(view);
+
+        return view;
     }
     public void debug(String str)
     {
         Log.v("mydebug",str);
-    }
-
-    public static boolean deleteDirectory(File path) {
-        if(!path.exists()) {
-            return false;
-        }
-
-        File[] files = path.listFiles();
-        for (File file : files) {
-            if (file.isDirectory()) {
-                deleteDirectory(file);
-            } else {
-                file.delete();
-            }
-        }
-
-        return path.delete();
-    }
-    protected boolean saveToIntDir(String jsonData, String dirPath)//성공시 true
-    {
-        File dir = new File(dirPath);
-        if(!dir.exists()) {
-            debug("saveToIntDir : Roche dir not exists");
-            boolean res = dir.mkdirs();
-            if (res == false) {
-                debug("saveToIntDir failed : dir generation rejected");
-                return false;
-            }
-            else debug("saveToIntDir : Roche dir created");
-        }
-        try {
-            PrintWriter pw = new PrintWriter(dirPath + "/mydata.json");
-            pw.println(jsonData);
-            pw.close();
-        }catch(Exception e){
-            debug("saveToIntDir failed : file write error : " + e.toString());
-            return false;
-        }
-        debug("saveToIntDir succeed : " + jsonData);
-        return true;
-    }
-
-    protected String loadJsonData(){
-        String res="";
-        File dir = new File(jsonPath);
-        // debug(""+deleteDirectory(dir));
-        if(!dir.exists())
-        {
-            debug("call loadJsonDataFromRes");
-            res = loadJsonDataFromRes();
-            saveToIntDir(res, dir.getAbsolutePath());
-            //그 후 디렉토리 생성하고 파일 복사해서 저장
-        }
-        else
-        {
-            debug("call loadJsonDataFromInternal");
-            res = loadJsonDataFromInternal(dir.getAbsolutePath());
-        }
-        debug("result length : " + res.length());
-        debug("result : " + res);
-        return res;
-    }
-
-    protected void savePersonToInternal(Person newbie)
-    {
-        try {
-            JSONObject jsonObj = new JSONObject(loadJsonData());
-
-            // Getting JSON Array node
-            JSONArray arr = jsonObj.getJSONArray(TAG_CONTACTS);
-            JSONObject jsonPerson = new JSONObject();
-            JSONObject jsonPhone = new JSONObject();
-            jsonPerson.put("name",newbie.name);
-            jsonPerson.put("email",newbie.email);
-            jsonPhone.put("mobile",newbie.mobile);
-            jsonPhone.put("home","01012344321");
-            jsonPerson.put("phone",jsonPhone);
-            arr.put(jsonPerson);
-            saveToIntDir(jsonObj.toString(), jsonPath);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-
     }
 
 
@@ -235,8 +238,6 @@ public class ContactsFragment extends Fragment {
         if (jsonStr != null) {
             try {
                 JSONObject jsonObj = new JSONObject(jsonStr);
-
-                // Getting JSON Array node
                 contacts = jsonObj.getJSONArray(TAG_CONTACTS);
 
                 // looping through All Contacts
@@ -287,7 +288,7 @@ public class ContactsFragment extends Fragment {
     protected void addListContact()
     {
         Intent intent = new Intent(getContext(), addActivity.class);
-        startActivityForResult(intent, 1);
+        startActivityForResult(intent, ADD_LIST_CONTACT);
         return;
     }
     @Override
@@ -295,23 +296,24 @@ public class ContactsFragment extends Fragment {
     {
         super.onActivityResult(requestCode, resultCode, data);
         debug("onActivity called");
-        if(resultCode == Activity.RESULT_OK)
-        {
-            if(requestCode == 1)
-            {
-                String name = data.getStringExtra("data_name");
-                String email = data.getStringExtra("data_email");
-                String mobile = data.getStringExtra("data_mobile");
-                Person newb = new Person(name, email, mobile);
-                contactList.add(contactList.size()-1,newb);
-                savePersonToInternal(newb);
-                sortContact();
-                Adapter.notifyDataSetChanged();
+        if(requestCode == ADD_LIST_CONTACT) {
+            if (resultCode == Activity.RESULT_OK) {
+
+                    String name = data.getStringExtra("data_name");
+                    String email = data.getStringExtra("data_email");
+                    String mobile = data.getStringExtra("data_mobile");
+                    Person newb = new Person(name, email, mobile);
+                    contactList.add(contactList.size() - 1, newb);
+                    //savePersonToInternal(newb);
+                    //sortContact();
+                    Adapter.notifyDataSetChanged();
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                Toast.makeText(getContext(), "Input Canceled!", Toast.LENGTH_SHORT);
             }
-        }
-        else if(resultCode == Activity.RESULT_CANCELED)
-        {
-            Toast.makeText(getContext(), "Input Canceled!", Toast.LENGTH_SHORT);
+        } else if (requestCode == 12345){
+            updateLoginStatus(null);
+        } else{
+            callbackManager.onActivityResult(requestCode,   resultCode, data);
         }
     }
     class Person{
@@ -371,87 +373,7 @@ public class ContactsFragment extends Fragment {
     }
 
 
-    public JSONArray sortJsonArrayByName(JSONArray array)
-    {
-        try {
-            List<JSONObject> jsons = new ArrayList<JSONObject>();
-            for (int i = 0; i < array.length(); i++) {
-                jsons.add(array.getJSONObject(i));
-            }
-            Collections.sort(jsons, new Comparator<JSONObject>() {
-                @Override
-                public int compare(JSONObject lhs, JSONObject rhs) {
-                    try {
-                        String lid = lhs.getString("name");
-                        String rid = rhs.getString("name");
-                        // Here you could parse string id to integer and then compare.
-                        return lid.compareTo(rid);
-                    }catch(Exception e){}
-                    return 1;
-                }
-            });
-            return new JSONArray(jsons);
-        }catch(Exception e){debug("sort error : " + e.toString());}
-        return null;
-    }
 
-    public void sortContact()
-    {
-        try {
-            JSONObject jsonObj = new JSONObject(loadJsonData());
-            JSONArray arr = jsonObj.getJSONArray(TAG_CONTACTS);
-            JSONArray newarr = sortJsonArrayByName(arr);
-            JSONObject res = new JSONObject();
-            res.put("contacts", newarr);
-            saveToIntDir(res.toString(), jsonPath);
-            debug("sortContact Result : " + res.toString());
-        } catch (Exception e) {
-            debug("sortContact : json error");
-        }
-        //contactList = jsonStringToList(loadJsonData());
-        contactList.remove(contactList.size()-1);
-        Collections.sort(contactList, new Comparator<Person>() {
-            @Override
-            public int compare(Person lhs, Person rhs) {
-                try {
-                    String lid = lhs.name;
-                    String rid = rhs.name;
-                    // Here you could parse string id to integer and then compare.
-                    return lid.compareTo(rid);
-                }catch(Exception e){}
-                return 1;
-            }
-        });
-        contactList.add(new Person("","",""));
-        Adapter.notifyDataSetChanged();
-    }
-
-    public void removeContact(int pos)
-    {
-        if(pos == contactList.size() -1)
-        {
-            Toast.makeText(getContext(), "It's dummy!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        contactList.remove(pos);
-        Adapter.notifyDataSetChanged();
-        try {
-            JSONObject jsonObj = new JSONObject(loadJsonData());
-            JSONArray arr = jsonObj.getJSONArray(TAG_CONTACTS);
-            JSONArray newarr = new JSONArray();
-            for(int i=0;i<arr.length();i++)
-            {
-                if(i == pos) continue;
-                newarr.put(arr.getJSONObject(i));
-            }
-            JSONObject res = new JSONObject();
-            res.put("contacts", newarr);
-            saveToIntDir(res.toString(), jsonPath);
-            debug("removeContact Result : " + res.toString());
-        } catch (JSONException e) {
-            debug("removeContact : json error");
-        }
-    }
     class ListViewItemLongClickListener implements AdapterView.OnItemLongClickListener
     {
         @Override
@@ -467,7 +389,7 @@ public class ContactsFragment extends Fragment {
                 public void onClick( DialogInterface dialog, int which )
                 {
                     debug("longClick : Yes");
-                    removeContact(position);
+                    //removeContact(position);
                     Adapter.notifyDataSetChanged();
                     dialog.dismiss();  // AlertDialog를 닫는다.
                 }
@@ -489,13 +411,7 @@ public class ContactsFragment extends Fragment {
             return true;
         }
     };
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        Toast.makeText(getContext(), "onButtonPressed for Tab A", Toast.LENGTH_LONG);
-//        if (mListener != null) {
-//            mListener.onFragmentInteraction(uri);
-//        }
-    }
+
 
     @Override
     public void onAttach(Context context) {
@@ -514,20 +430,258 @@ public class ContactsFragment extends Fragment {
 //        mListener = null;
     }
 
-//    /**
-//     * This interface must be implemented by activities that contain this
-//     * fragment to allow an interaction in this fragment to be communicated
-//     * to the activity and potentially other fragments contained in that
-//     * activity.
-//     * <p/>
-//     * See the Android Training lesson <a href=
-//     * "http://developer.android.com/training/basics/fragments/communicating.html"
-//     * >Communicating with Other Fragments</a> for more information.
-//     */
-//    public interface OnFragmentInteractionListener {
-//        // TODO: Update argument type and name
-//        void onFragmentInteraction(Uri uri);
-//    }
 
+    public void sendToken(){
+        debug("sendToken");
+        if(AccessToken.getCurrentAccessToken() == null){
+            debug("no token available");
+            return;
+        }
+        JSONObject qry = new JSONObject();
+        String token = AccessToken.getCurrentAccessToken().getToken().toString();
+        try{
+            qry.put("token",token);
+            qry.put("ReqType","sendToken");
+            qry.put("ResType","null");
+        } catch(Exception e){
+            debug("sendToken json err " + e.toString());
+        }
+        renewMyInfo();
+        mSocket.emit("init",myInfo.toString());
+    }
+    //http://socket.io/blog/native-socket-io-and-android/
+    private Emitter.Listener handleNewChat = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            debug("args " + args.length);
+            for(int i=0;i<args.length;i++) debug(i + args[i].toString());
+        }
+    };
+
+    public void updateLoginStatus(View view)
+    {
+        if (view == null) view = getView();
+        String path = getContext().getFilesDir().getAbsolutePath() + "/mylogin";
+        File acc = new File(path + "/account");
+        if(!acc.exists())//no dir
+        {
+            debug("no acc");
+            Button loginbut = (Button)view.findViewById(R.id.mylogin);
+            loginbut.setText("LOGIN");
+        }
+        else
+        {
+            debug("yes acc");
+            Button loginbut = (Button)view.findViewById(R.id.mylogin);
+            loginbut.setText("LOGOUT");
+        }
+    }
+
+    public JSONObject getLoginStatus()
+    {
+        String path = getContext().getFilesDir().getAbsolutePath() + "/mylogin";
+        File acc = new File(path + "/account");
+        if(!acc.exists()) return null;
+        else {
+            String res = "";
+            byte[] b = new byte[1024];
+            try {
+                FileInputStream input = new FileInputStream(path + "/account");
+                input.read(b);
+                res = new String(b).trim();
+                input.close();
+            }catch(Exception e){
+                Log.d("mydebug", "getLoginStatus error + " + e.toString());
+            }
+            try{
+                JSONObject result = new JSONObject(res);
+                return result;}
+            catch(Exception e){
+                Log.d("mydebug", "getLoginStatus error + " + e.toString());
+            }
+        }
+        return null;
+    }
+
+    public void callLogin()
+    {
+        JSONObject acc = getLoginStatus();
+
+        //Login
+        if(acc == null) {
+            Intent intent = new Intent(getContext(), LoginActivity.class);
+            startActivityForResult(intent, 12345);
+        }
+
+        //Logout
+        else{
+            String path = getContext().getFilesDir().getAbsolutePath() + "/mylogin";
+            File f = new File(path + "/account");
+            Log.d("mydebug", f.delete()+"");
+            updateLoginStatus(null);
+        }
+        return;
+    }
+
+
+    public ArrayList<JSONObject> getContactList()
+    {
+        HashMap<String , JSONObject> temp = new HashMap<String,JSONObject>();
+        ArrayList<JSONObject> res = new ArrayList<JSONObject>();
+        ContentResolver cr = getContext().getContentResolver();
+        String order = "CASE WHEN "
+                + ContactsContract.Contacts.DISPLAY_NAME
+                + " NOT LIKE '%@%' THEN 1 ELSE 2 END, "
+                + ContactsContract.Contacts.DISPLAY_NAME
+                + ", "
+                + ContactsContract.CommonDataKinds.Email.DATA
+                + " COLLATE NOCASE";
+        String filter = ContactsContract.CommonDataKinds.Email.DATA + " NOT LIKE ''";
+
+        String[] projection = new String[] { ContactsContract.Data.CONTACT_ID,
+                ContactsContract.Data.DISPLAY_NAME,
+                ContactsContract.Data.PHOTO_ID,
+                ContactsContract.Data.MIMETYPE,
+                ContactsContract.Data.DATA2, // type
+                ContactsContract.Data.DATA1  // phone.number, organization.company
+        };
+
+        Cursor mCursor = getContext().getContentResolver().query(
+                ContactsContract.Data.CONTENT_URI,
+                projection,
+                ContactsContract.Data.MIMETYPE +"='"+ ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE +"' or " +
+                        ContactsContract.Data.MIMETYPE +"='"+ ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE +"'",
+                null,
+                ContactsContract.Data.DISPLAY_NAME+","+ContactsContract.Data._ID+" COLLATE LOCALIZED ASC");
+
+
+        int idIdx = mCursor.getColumnIndex( ContactsContract.Data.CONTACT_ID);
+        int nameIdx = mCursor.getColumnIndex(ContactsContract.Data.DISPLAY_NAME);
+        int numIdx = mCursor.getColumnIndex(ContactsContract.Data.DATA1);
+        int emailIdx = mCursor.getColumnIndex(ContactsContract.Data.DATA2);
+        int photoIdx = mCursor.getColumnIndex(ContactsContract.Data.PHOTO_ID);
+        String id = " ", name = " ", num = " ", email=" ", photo=" ";
+        if(mCursor.moveToFirst()) {
+            do {
+                id = " "; name = " "; num = " "; email=" "; photo=" ";
+                if (idIdx != -1) id = mCursor.getString(idIdx);
+                if (nameIdx != -1) name = mCursor.getString(nameIdx);
+                if (numIdx != -1) num = mCursor.getString(numIdx);
+                if (emailIdx != -1) email = mCursor.getString(emailIdx);
+                if (photoIdx != -1) photo = mCursor.getString(photoIdx);
+                id = id.trim(); name=name.trim(); num=num.trim(); email=email.trim();if(photo!=null) photo=photo.trim();
+                if(temp.containsKey(id)){
+                    JSONObject now = temp.get(id);try{
+                        if (id!=null &&!id.equals("") && !now.has("id")) now.put("id", id);
+                        if (name!=null && !name.equals("")&& !now.has("name")) now.put("name", name);
+                        if (num!=null && !num.equals("")) {
+                            if(isEmailAddress(num)){now.getJSONArray("email").put(num);}
+                            else if(isPhoneNumber(num)){now.getJSONArray("phone").put(num);}
+                            else now.getJSONArray("other").put(num);
+                        }
+                        if (photo!=null && !photo.equals(" ") && !now.has("photo")) now.put("photo", photo);}catch(Exception e){
+                        debug("err1"+e.toString());
+                    }
+                } else {//make new json object
+                    JSONObject now = new JSONObject();
+                    try {
+                        JSONArray phoneArr = new JSONArray(); JSONArray emailArr = new JSONArray(); JSONArray other = new JSONArray();
+                        now.put("phone", phoneArr); now.put("email", emailArr); now.put("other",other);
+                        if (!id.equals("")) now.put("id", id);
+                        if (!name.equals("")) now.put("name", name);
+                        if (!num.equals("")) {
+                            if(isEmailAddress(num)){now.getJSONArray("email").put(num);}
+                            else if(isPhoneNumber(num)){now.getJSONArray("phone").put(num);}
+                            else now.getJSONArray("other").put(num);
+                        }
+                        if (photo!=null && !photo.equals(" ")) now.put("photo", photo);
+                    } catch(Exception e){debug(e.toString());}
+                    temp.put(id,now);
+                }
+                debug(id+name+num+email+photo);
+            } while (mCursor.moveToNext());
+        }
+        mCursor.close();
+        for(Map.Entry<String, JSONObject> i : temp.entrySet())
+        {
+            debug(i.getKey().toString() + i.getValue().toString());
+            res.add(i.getValue());
+        }
+        return res;
+    }
+
+    public void sendLocalContent()
+    {
+        debug("sendLocalContent start");
+        ArrayList<JSONObject> templist = getContactList();
+        JSONArray contact = new JSONArray();
+        JSONObject user = getLoginStatus();
+        if(user == null){
+            debug("sendLocalContent error : user null");
+            Toast.makeText(getContext(),"You have to login First!", Toast.LENGTH_LONG ).show();
+            return;
+        }
+        try{
+            for(JSONObject i : templist){i.put("src","phone"); contact.put(i);}
+            JSONObject arg = new JSONObject(); arg.put("contact", contact);
+            arg.put("user", user);
+            renewMyInfo();
+            if(myInfo!=null) arg.put("fbinfo",myInfo);
+            mSocket.emit("uploadPhoneContact", arg);
+        } catch(Exception e){debug(e.toString());}
+    }
+
+    public boolean isEmailAddress(String str)
+    {
+        return str.contains("@");
+    }
+
+    public boolean isPhoneNumber(String str)
+    {
+        for(int i=0;i<str.length();i++){
+            int code = str.charAt(i);
+            if((code!='+'&&code!='-'&&code!=' ') && (code>'9' || code <'0')) return false;
+        }
+        return true;
+    }
+
+    public void renewMyInfo()
+    {
+        if(AccessToken.getCurrentAccessToken() == null) {myInfo = null; debug("no access token -> no info");return;}
+        try {
+            Thread t=
+                    new Thread(){
+                        public void run(){
+                            try{
+                                String token = AccessToken.getCurrentAccessToken().getToken().toString();
+                                String url = "https://graph.facebook.com/me/?access_token=" + token;
+                                URL myurl = new URL(url);
+                                HttpsURLConnection con = (HttpsURLConnection)myurl.openConnection();
+                                InputStream ins = con.getInputStream();
+                                InputStreamReader isr = new InputStreamReader(ins);
+                                BufferedReader in = new BufferedReader(isr);
+                                String inputLine; String res = "";
+                                while ((inputLine = in.readLine()) != null){res += inputLine;}
+                                myInfo = new JSONObject(res);
+                                myInfo.put("fbid", myInfo.get("id"));
+                                myInfo.put("token",token);
+                                myInfo.remove("id");
+                                debug("renew : "+myInfo.toString());
+                                in.close();
+                                synchronized (this) {
+                                    this.notify();
+                                }
+                            }catch(Exception e){}
+                        }
+                    };
+            t.start();
+            synchronized (t) {
+                t.wait();
+            }
+        }catch(Exception e){
+            debug(e.toString());
+        }
+
+    }
 
 }

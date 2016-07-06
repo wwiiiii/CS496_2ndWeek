@@ -16,6 +16,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <supports-screens
         android:largeScreens="true"
@@ -28,7 +29,7 @@
     <!-- <uses-permission android:name="android.permission.READ_CONTACTS" /> -->
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/plus_black"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
@@ -42,7 +43,21 @@
         <activity
             android:name="com.example.q.helloworld.addActivity"
             android:label="@string/title_activity_dialog"
-            android:theme="@android:style/Theme.Dialog" >
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <activity android:name="com.example.q.helloworld.LoginActivity" />
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true" >
         </activity>
     </application>
 

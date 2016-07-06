@@ -126,14 +126,14 @@
                     "endOffset": 639
                 },
                 "from": {
-                    "file": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.0.0\\res\\values-land\\values-land.xml",
+                    "file": "C:\\Users\\q\\AndroidStudioProjects\\Helloworld\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.4.0\\res\\values-land\\values-land.xml",
                     "position": {
-                        "startLine": 4,
+                        "startLine": 2,
                         "startColumn": 4,
-                        "startOffset": 271,
-                        "endLine": 7,
+                        "startOffset": 55,
+                        "endLine": 5,
                         "endColumn": 12,
-                        "endOffset": 448
+                        "endOffset": 232
                     }
                 }
             }

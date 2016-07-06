@@ -1,7 +1,12 @@
 package com.example.q.helloworld;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +20,7 @@ import android.widget.CheckBox;
 import android.widget.Button;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -28,6 +34,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)!= PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.READ_CONTACTS)) {
+                Toast.makeText(getApplicationContext(), "PLEASE...", Toast.LENGTH_LONG);
+                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_CONTACTS}, PERMISSIONS_REQUEST_READ_CONTACTS);
+            } else {
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_CONTACTS},
+                        PERMISSIONS_REQUEST_READ_CONTACTS);
+            }
+        }
 
         FragmentTabHost tabHost=(FragmentTabHost)findViewById(R.id.tabHost);
         tabHost.setup(this,getSupportFragmentManager(),R.id.realtabcontent);
